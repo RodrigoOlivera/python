@@ -1,4 +1,5 @@
-*.txt 
+*.txt
 *.pyc
 get-pip.py
 **/env
+**/log
