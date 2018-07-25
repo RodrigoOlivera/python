@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, request, Response
 import json
-
-app = Flask(__name__)
+from settings import *
 
 books = [
     {
@@ -67,7 +66,7 @@ def replace_book(isbn):
             'price': request_data['price'],
             'isbn': isbn
     }
-    i = 0;
+    i = 0
     for book in books:
         currentIsbn = book["isbn"]
         if currentIsbn == isbn:
@@ -91,6 +90,19 @@ def update_book(isbn):
     response = Response("", status=204)
     response.headers['Location'] = '/books/' + str(isbn)
     return response
+
+#DELETE
+@app.route('/books/<int:isbn>', methods=['DELETE'])
+def delete_book(isbn):
+    i = 0;
+    for book in books[:]:
+        if book["isbn"] == isbn:
+            books.pop(i)
+            response = Response("", status=204)
+            return response
+        i += 1
+    return "";
+
 
 
 #/int:isbn is a cast of the variable isbn to int
